@@ -54,6 +54,9 @@ tsconfig.tsbuildinfo
 # Locale backup/generated files
 packages/uniswap/src/i18n/locales/source/*_old.json
 
+# Datadog cloud packages build output
+packages/*/bin
+
 # ci
 .ci-cache/
 
