@@ -14,7 +14,12 @@
     <meta name="theme-color" content="#fff" />
     <meta name="format-detection" content="telephone=no">
 
-    <!-- CSP will be injected here -->
+    <!-- Ring Wallet DApp SDK - EIP-1193 & EIP-6963 provider -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://wallet.ring.exchange https://wallet.testring.org https://challenges.cloudflare.com; frame-ancestors 'self' https://wallet.ring.exchange https://wallet.testring.org;"
+    />
+    <script src="https://wallet.ring.exchange/dappsdk.js"></script>
 
     <link rel="preconnect" href="https://interface.gateway.uniswap.org/" crossorigin/>
     <link rel="preconnect" href="https://mainnet.infura.io/" crossorigin/>

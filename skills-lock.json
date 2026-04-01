@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "dapp-to-ringwallet": {
+      "source": "ringprotocol/ring-ai",
+      "sourceType": "github",
+      "computedHash": "56772eb7318d3fd3c50a77e2e15b3c3d3632e83ed6a32f618cadf5244772bbc7"
+    }
+  }
+}

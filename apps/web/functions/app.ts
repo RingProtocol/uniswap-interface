@@ -46,9 +46,7 @@ function cacheControl(maxAge: number) {
 export function createApp({ fetchSpaHtml, getEntryGatewayUrl, getWebSocketUrl, getTrustedClientIp }: AppConfig) {
   const app = new Hono<{ Bindings: Bindings }>()
 
-  // ── OG image routes ────────────────────────────────────────────────────
   app.get('/api/image/tokens/:networkName/:tokenAddress', cacheControl(604800), tokenImageHandler)
-
   app.get('/api/image/pools/:networkName/:poolAddress', cacheControl(604800), poolImageHandler)
 
   // ── BFF proxy: entry-gateway ─────────────────────────────────────────
@@ -57,6 +55,7 @@ export function createApp({ fetchSpaHtml, getEntryGatewayUrl, getWebSocketUrl, g
     const path = c.req.path.slice('/entry-gateway'.length) || '/'
     const query = new URL(c.req.url).search
 
+    
     // Forward the real client IP so the EGW authorizer (and downstream
     // providers like Coinbase) see the user's IP, not the proxy's IP.
     // Each platform provides a trusted IP source — Cloudflare sets
@@ -118,7 +117,7 @@ export function createApp({ fetchSpaHtml, getEntryGatewayUrl, getWebSocketUrl, g
     }
   })
 
-  // ── Catch-all: SPA serving + meta tag injection ────────────────────────
+  // ── Catch-all: SPA serving + meta tag injection + security headers ─────
   app.all('*', async (c: Context) => {
     const url = new URL(c.req.url)
 
@@ -134,7 +133,13 @@ export function createApp({ fetchSpaHtml, getEntryGatewayUrl, getWebSocketUrl, g
     }
 
     // For non-API routes, use meta tag injection middleware
-    return metaTagInjectionMiddleware(c, next)
+    const response = await metaTagInjectionMiddleware(c, next)
+    // Set security headers only for HTML responses
+    if (response.headers.get('content-type')?.includes('text/html')) {
+      response.headers.set('Content-Security-Policy', "frame-ancestors 'self' https://wallet.ring.exchange https://wallet.testring.org;")
+      response.headers.set('X-Frame-Options', 'SAMEORIGIN')
+    }
+    return response
   })
 
   return app

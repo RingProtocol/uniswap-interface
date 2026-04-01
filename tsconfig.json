@@ -35,28 +35,16 @@
       "path": "./config/vitest-presets"
     },
     {
-      "path": "./tools/uniswap-nx"
-    },
-    {
       "path": "./packages/gating"
     },
     {
       "path": "./packages/notifications"
     },
     {
-      "path": "./apps/cli"
-    },
-    {
       "path": "./packages/hashcash-native"
     },
     {
-      "path": "./packages/transactional"
-    },
-    {
       "path": "./packages/mycelium"
-    },
-    {
-      "path": "./packages/docker-image-builder"
     },
     {
       "path": "./packages/websocket"
