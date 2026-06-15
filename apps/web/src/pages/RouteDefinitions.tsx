@@ -47,7 +47,12 @@ const PrivacyPolicy = lazy(() => import('pages/PrivacyPolicy'))
 const ExtensionPasskeyAuthPopUp = lazy(() => import('pages/ExtensionPasskeyAuthPopUp'))
 const PasskeyManagement = lazy(() => import('pages/PasskeyManagement'))
 const Referral = lazy(() => import('pages/Referral'))
-const LimitOrder = lazy(() => import('pages/LimitOrder'))
+const Advanced = lazy(() => import('pages/Advanced'))
+
+function AdvancedRedirect() {
+  const { search } = useLocation()
+  return <Navigate to={{ pathname: '/advanced', search }} replace />
+}
 
 interface RouterConfig {
   browserRouterEnabled?: boolean
@@ -231,17 +236,37 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/limits',
-    getElement: () => <Navigate to="/limit" replace />,
+    getElement: () => <AdvancedRedirect />,
     getTitle: () => i18n.t('title.placeLimit'),
   }),
   createRouteDefinition({
     path: '/limit',
-    getElement: () => <Swap />,
+    getElement: () => <AdvancedRedirect />,
     getTitle: () => i18n.t('title.placeLimit'),
   }),
   createRouteDefinition({
     path: '/limit-order',
-    getElement: () => <LimitOrder />,
+    getElement: () => <AdvancedRedirect />,
+    getTitle: () => i18n.t('title.placeLimit'),
+  }),
+  createRouteDefinition({
+    path: '/advanced',
+    getElement: () => <Advanced />,
+    getTitle: () => i18n.t('title.placeLimit'),
+  }),
+  createRouteDefinition({
+    path: '/twap',
+    getElement: () => <Advanced />,
+    getTitle: () => i18n.t('title.placeLimit'),
+  }),
+  createRouteDefinition({
+    path: '/stop-loss',
+    getElement: () => <Advanced />,
+    getTitle: () => i18n.t('title.placeLimit'),
+  }),
+  createRouteDefinition({
+    path: '/take-profit',
+    getElement: () => <Advanced />,
     getTitle: () => i18n.t('title.placeLimit'),
   }),
   createRouteDefinition({

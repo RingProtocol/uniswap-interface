@@ -545,13 +545,3 @@ function SubmitOrderButton({
     </Trace>
   )
 }
-
-export function LimitFormWrapper(props: LimitFormProps) {
-  return (
-    <Trace page={InterfacePageNameLocal.Limit}>
-      <LimitContextProvider>
-        <LimitForm {...props} />
-      </LimitContextProvider>
-    </Trace>
-  )
-}

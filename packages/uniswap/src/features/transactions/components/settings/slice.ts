@@ -28,6 +28,7 @@ export interface TransactionSettingsState {
   autoSlippageTolerance?: number
   customSlippageTolerance?: number
   customDeadline?: number
+  priceProtection?: number
   selectedProtocols: FrontendSupportedProtocol[]
   slippageWarningModalSeen: boolean
   isV4HookPoolsEnabled: boolean
