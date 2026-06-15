@@ -1,3 +1,4 @@
+import { type Module } from '@orbs-network/spot-react'
 import { InterfacePageName } from '@uniswap/analytics-events'
 import { Currency } from '@uniswap/sdk-core'
 import { PrefetchBalancesWrapper } from 'appGraphql/data/apollo/AdaptiveTokenBalancesProvider'
@@ -8,6 +9,8 @@ import { PageWrapper } from 'components/swap/styled'
 import { useAccount } from 'hooks/useAccount'
 import { useDeferredComponent } from 'hooks/useDeferredComponent'
 import { PageType, useIsPage } from 'hooks/useIsPage'
+import { SpotModuleSelect } from 'pages/Advanced/spot/components/SpotModuleSelect'
+import { PATHNAME_BY_MODULE } from 'pages/Advanced/spot/constants'
 import { useResetOverrideOneClickSwapFlag } from 'pages/Swap/settings/OneClickSwap'
 import { useWebSwapSettings } from 'pages/Swap/settings/useWebSwapSettings'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -183,7 +186,7 @@ const SWAP_TABS = [SwapTab.Swap, SwapTab.Stock, SwapTab.Limit, SwapTab.Send, Swa
 const TAB_TYPE_TO_LABEL = {
   [SwapTab.Swap]: (t: AppTFunction) => t('swap.form.header'),
   [SwapTab.Stock]: (t: AppTFunction) => t('swap.stock'),
-  [SwapTab.Limit]: (t: AppTFunction) => t('swap.limit'),
+  [SwapTab.Limit]: () => 'Advanced',
   [SwapTab.Send]: (t: AppTFunction) => t('send.title'),
   [SwapTab.Buy]: (t: AppTFunction) => t('common.buy.label'),
   [SwapTab.Sell]: (t: AppTFunction) => t('common.sell.label'),
@@ -194,6 +197,7 @@ const PATHNAME_TO_TAB: { [key: string]: SwapTab } = {
   '/stock': SwapTab.Stock,
   '/send': SwapTab.Send,
   '/limit': SwapTab.Limit,
+  '/advanced': SwapTab.Limit,
   '/limit-order': SwapTab.Limit,
   '/buy': SwapTab.Buy,
   '/sell': SwapTab.Sell,
@@ -226,11 +230,6 @@ function UniversalSwapFlow({
   const swapCallback = useSwapCallback()
   const wrapCallback = useWrapCallback()
 
-  const LimitFormWrapper = useDeferredComponent(() =>
-    import('pages/Swap/Limit/LimitForm').then((module) => ({
-      default: module.LimitFormWrapper,
-    })),
-  )
   const BuyForm = useDeferredComponent(() =>
     import('pages/Swap/Buy/BuyForm').then((module) => ({
       default: module.BuyForm,
@@ -256,12 +255,20 @@ function UniversalSwapFlow({
     (tab: SwapTab) => {
       sendAnalyticsEvent(InterfaceEventNameLocal.SwapTabClicked, { tab })
       if (syncTabToUrl) {
-        navigate(tab === SwapTab.Limit ? '/limit-order' : `/${tab}`, { replace: true })
+        navigate(tab === SwapTab.Limit ? '/advanced' : `/${tab}`, { replace: true })
       } else {
         setCurrentTab(tab)
       }
     },
     [navigate, syncTabToUrl, setCurrentTab],
+  )
+
+  const onAdvancedModuleSelect = useCallback(
+    (module: Module) => {
+      sendAnalyticsEvent(InterfaceEventNameLocal.SwapTabClicked, { tab: SwapTab.Limit })
+      navigate(PATHNAME_BY_MODULE[module], { replace: true })
+    },
+    [navigate],
   )
 
   const isFiatOffRampEnabled = useFeatureFlag(FeatureFlags.FiatOffRamp)
@@ -276,7 +283,7 @@ function UniversalSwapFlow({
       }
 
       if (tab === SwapTab.Limit) {
-        return true
+        return false
       }
       if (tab === SwapTab.Buy) {
         return false
@@ -307,14 +314,13 @@ function UniversalSwapFlow({
   const connectorId = useAccount().connector?.id
   const passkeyAuthStatus = useGetPasskeyAuthStatus(connectorId)
 
-  const isLimitEnabled = useFeatureFlag(FeatureFlags.ShowLimit)
   const isBuyEnabled = useFeatureFlag(FeatureFlags.ShowBuy)
   const isSellEnabled = useFeatureFlag(FeatureFlags.ShowSell)
 
   return (
     <Flex>
       {!hideHeader && SWAP_TAB_OPTIONS.length > 1 && (
-        <Flex row gap="$spacing16">
+        <Flex row gap="$spacing8" flexWrap="wrap" alignItems="center">
           <SegmentedControl
             outlined={false}
             size="large"
@@ -323,6 +329,7 @@ function UniversalSwapFlow({
             onSelectOption={onTabClick}
             gap={isMobileWeb ? '$spacing8' : undefined}
           />
+          {syncTabToUrl && <SpotModuleSelect onSelectModule={onAdvancedModuleSelect} />}
         </Flex>
       )}
       {!hideHeader && SWAP_TAB_OPTIONS.length === 1 && SWAP_TAB_OPTIONS[0] && (
@@ -348,9 +355,6 @@ function UniversalSwapFlow({
           </SwapDependenciesContextProvider>
           <SwapBottomCard />
         </Flex>
-      )}
-      {isLimitEnabled && currentTab === SwapTab.Limit && LimitFormWrapper && (
-        <LimitFormWrapper onCurrencyChange={onCurrencyChange} />
       )}
       {isSellEnabled && currentTab === SwapTab.Send && SendForm && (
         <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />

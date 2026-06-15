@@ -39,7 +39,11 @@ export const useTabsContent = (): TabsSection[] => {
       isActive:
         pathname.startsWith('/swap') ||
         pathname.startsWith('/limit') ||
+        pathname.startsWith('/advanced') ||
         pathname.startsWith('/limit-order') ||
+        pathname.startsWith('/twap') ||
+        pathname.startsWith('/stop-loss') ||
+        pathname.startsWith('/take-profit') ||
         pathname.startsWith('/send'),
       items: [
         {
@@ -49,9 +53,9 @@ export const useTabsContent = (): TabsSection[] => {
           internal: true,
         },
         {
-          label: 'Limit Order',
+          label: 'Advanced',
           icon: <Limit fill={theme.neutral2} />,
-          href: '/limit-order',
+          href: '/advanced',
           internal: true,
         },
         ...(isSellEnabled || isFiatOffRampEnabled

@@ -68,6 +68,7 @@ export interface TokenSelectorProps {
   focusHook?: ComponentProps<typeof BottomSheetView>['focusHook']
   onSelectChain?: (chainId: UniverseChainId | null) => void
   includeAllNetworks?: boolean
+  hideNetworkFilter?: boolean
   onSelectCurrency: ({
     currency,
     field,
@@ -95,6 +96,7 @@ export function TokenSelectorContent({
   onClose,
   onSelectChain,
   includeAllNetworks = true,
+  hideNetworkFilter = false,
   onSelectCurrency,
 }: Omit<TokenSelectorProps, 'isModalOpen'>): JSX.Element {
   const { onChangeChainFilter, onChangeText, searchFilter, chainFilter, parsedChainFilter, parsedSearchFilter } =
@@ -303,17 +305,19 @@ export function TokenSelectorContent({
             endAdornment={
               <Flex row alignItems="center">
                 {hasClipboardString && <PasteButton inline textVariant="buttonLabel3" onPress={handlePaste} />}
-                <NetworkFilter
-                  includeAllNetworks={includeAllNetworks && !isTestnetModeEnabled}
-                  chainIds={chainIds || enabledChains}
-                  selectedChain={chainFilter}
-                  styles={isExtension || isMobileWeb ? { dropdownZIndex: zIndexes.overlay } : undefined}
-                  onDismiss={dismissNativeKeyboard}
-                  onPressChain={(newChainId) => {
-                    onChangeChainFilter(newChainId)
-                    onSelectChain?.(newChainId)
-                  }}
-                />
+                {!hideNetworkFilter && (
+                  <NetworkFilter
+                    includeAllNetworks={includeAllNetworks && !isTestnetModeEnabled}
+                    chainIds={chainIds || enabledChains}
+                    selectedChain={chainFilter}
+                    styles={isExtension || isMobileWeb ? { dropdownZIndex: zIndexes.overlay } : undefined}
+                    onDismiss={dismissNativeKeyboard}
+                    onPressChain={(newChainId) => {
+                      onChangeChainFilter(newChainId)
+                      onSelectChain?.(newChainId)
+                    }}
+                  />
+                )}
               </Flex>
             }
             placeholder={t('tokens.selector.search.placeholder')}
