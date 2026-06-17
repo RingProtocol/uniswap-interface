@@ -88,7 +88,9 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
           title={isSubmitted ? undefined : `Review ${getSpotModuleLabel(module)} order`}
           closeModal={closeModal}
         />
-        <SpotSubmitSwapFlow />
+       <StylesSwapFlow>
+       <SpotSubmitSwapFlow />
+       </StylesSwapFlow>
         {!isSubmitted && (
           <>
             <Flex row alignItems="center" justifyContent="space-between" gap="$spacing12">
@@ -121,6 +123,15 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
     </Modal>
   )
 }
+
+const StylesSwapFlow = styled.div`
+  .orbs_MainTokenLeft {
+    color: ${({ theme }) => theme.neutral1};
+  }
+  .orbs_TradeStepLayout {
+    color: ${({ theme }) => theme.neutral1};
+  }
+`
 
 function SpotSubmitModalHeader({ title, closeModal }: { title?: string; closeModal: () => void }) {
   return (
