@@ -81,6 +81,10 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
     }
   }, [isSubmitted, isSuccess, onClose, resetCurrentSwap, resetState, setTypedInputAmount])
 
+  const handleSubmit = useCallback(() => {
+    void onSubmit().catch(() => undefined)
+  }, [onSubmit])
+
   return (
     <Modal name={LIMIT_ORDER_MODAL_NAME} isModalOpen={isOpen} onClose={closeModal} maxWidth={520} padding={0}>
       <Flex gap="$spacing16" p="$spacing20">
@@ -88,9 +92,9 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
           title={isSubmitted ? undefined : `Review ${getSpotModuleLabel(module)} order`}
           closeModal={closeModal}
         />
-       <StylesSwapFlow>
-       <SpotSubmitSwapFlow />
-       </StylesSwapFlow>
+        <StylesSwapFlow>
+          <SpotSubmitSwapFlow />
+        </StylesSwapFlow>
         {!isSubmitted && (
           <>
             <Flex row alignItems="center" justifyContent="space-between" gap="$spacing12">
@@ -113,7 +117,7 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
               width="100%"
               loading={Boolean(confirmButtonLoading)}
               isDisabled={!accepted || Boolean(confirmButtonLoading)}
-              onPress={onSubmit}
+              onPress={handleSubmit}
             >
               Create Order
             </Button>
@@ -125,9 +129,19 @@ export function SpotSubmitOrderModal({ isOpen, onClose }: { isOpen: boolean; onC
 }
 
 const StylesSwapFlow = styled.div`
+  &,
+  *,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
+
   .orbs_MainTokenLeft {
     color: ${({ theme }) => theme.neutral1};
   }
+
   .orbs_TradeStepLayout {
     color: ${({ theme }) => theme.neutral1};
   }

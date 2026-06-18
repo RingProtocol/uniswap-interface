@@ -28,6 +28,15 @@ const SpotFormStack = styled.div`
   gap: 12px;
   min-width: 0;
   width: 100%;
+
+  &,
+  *,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
 `
 
 const PoweredByOrbsLink = styled.a`
