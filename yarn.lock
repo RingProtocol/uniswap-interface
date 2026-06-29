@@ -9021,11 +9021,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@orbs-network/spot-react@npm:1.1.30":
-  version: 1.1.30
-  resolution: "@orbs-network/spot-react@npm:1.1.30"
+"@orbs-network/spot-react@npm:1.1.37":
+  version: 1.1.37
+  resolution: "@orbs-network/spot-react@npm:1.1.37"
   dependencies:
-    "@orbs-network/spot-ui": 1.0.15
+    "@orbs-network/spot-ui": 1.0.20
   peerDependencies:
     "@tanstack/react-query": ^5.90.12
     bignumber.js: ^9.3.1
@@ -9033,26 +9033,26 @@ __metadata:
     react-dom: ^18.0.0 || ^19.0.0
     react-error-boundary: ^6.0.0
     zustand: ^5.0.9
-  checksum: eaa73d76e17d90ff33eb33dd1c735ead521b29a17967c4e35051c4e81f2d56aa4772393043718bdb3487bad06e7e9774cf2aed864446be88c84b455a0cc8746e
+  checksum: 78769a0b6a4af35896620d09efc97ae2a0d278048b6ce8224233e3768ab182b3740bb1474d1d74db622ef6216283d37a8d1a4a62c94a1e82b095a337480f2f97
   languageName: node
   linkType: hard
 
-"@orbs-network/spot-ui@npm:1.0.15":
-  version: 1.0.15
-  resolution: "@orbs-network/spot-ui@npm:1.0.15"
+"@orbs-network/spot-ui@npm:1.0.20":
+  version: 1.0.20
+  resolution: "@orbs-network/spot-ui@npm:1.0.20"
   dependencies:
-    "@orbs-network/spot": ^2.6.1
+    "@orbs-network/spot": ^2.6.5
     "@orbs-network/twap": ^2.7.28
   peerDependencies:
     bignumber.js: ^9.0.0
-  checksum: 61dbef2bb6cefeb5d0c265e3c08f9e6e9aeb6950838a15b4a2054e49054b313c87605676d39043e782919254d2142622436aeda78fa1f0815234b1a33fb9a71e
+  checksum: a80b6a32583b6583db8c81b5c092a7c2c743a2446bb473a029dd0e48dfbc11be7850b3898bb59c723964b1d8b131f6e94335b8e3c360801e3a92bf5ff049003c
   languageName: node
   linkType: hard
 
-"@orbs-network/spot@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "@orbs-network/spot@npm:2.6.1"
-  checksum: b602bec6cdd68f51ca6406d25a0d26484fd3a3c8c60063072132eea5f1644e36f1bfe77e651b5464dec47b2e2db831b383a251ff3734163949f1cc7e4a7013e2
+"@orbs-network/spot@npm:^2.6.5":
+  version: 2.6.5
+  resolution: "@orbs-network/spot@npm:2.6.5"
+  checksum: fcd901325ce889377e6ff58ed3327413e968b8034555c7bade491ad82ebfdd62812faaf8c050a065ee6907eae161da09bbcdd1bd652a42c185afb5aa17132fea
   languageName: node
   linkType: hard
 
@@ -16983,7 +16983,7 @@ __metadata:
     "@graphql-codegen/typescript-react-apollo": 3.3.7
     "@graphql-codegen/typescript-resolvers": 3.2.1
     "@juggle/resize-observer": 3.4.0
-    "@orbs-network/spot-react": 1.1.30
+    "@orbs-network/spot-react": 1.1.37
     "@orbs-network/swap-ui": 0.0.63
     "@playwright/test": 1.49.1
     "@popperjs/core": 2.11.8
