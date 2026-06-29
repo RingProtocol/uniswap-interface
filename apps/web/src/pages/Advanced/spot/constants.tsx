@@ -7,7 +7,7 @@ export type SpotModuleSearchParam = 'twap' | 'limit' | 'stop-loss' | 'take-profi
 
 export const DEFAULT_PRICE_PROTECTION = 3
 export const DEFAULT_MIN_CHUNK_SIZE_USD = 5
-export const SPOT_PARTNER = Partners.Agent
+export const SPOT_PARTNER = Partners.Ring
 export const SPOT_SUPPORTED_CHAIN_IDS = getPartnerChains(SPOT_PARTNER)
 export const LIMIT_ORDER_MODAL_NAME = ModalName.Dialog
 
